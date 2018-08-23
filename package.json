@@ -1,0 +1,32 @@
+{
+  "name": "web-cache-facade",
+  "version": "1.0.0",
+  "description": "为各种前端缓存提供丰富而统一的 API",
+  "main": "dist/CacheFacade.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mervynyang/CacheFacade.git"
+  },
+  "keywords": [
+    "cache",
+    "localStorage",
+    "sessionStorage"
+  ],
+  "author": "MervynYang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mervynyang/CacheFacade/issues"
+  },
+  "homepage": "https://github.com/mervynyang/CacheFacade#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
