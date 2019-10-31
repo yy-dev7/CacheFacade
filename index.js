@@ -4,34 +4,34 @@ const win = window
 win.externStorage = typeof win.externStorage === 'undefined' ? {} : win.externStorage
 
 class CacheFacade {
-  static store(strategy) {
-    return new CacheFacade(strategy)
+  static store(driver) {
+    return new CacheFacade(driver)
   }
 
-  constructor(strategy = 'externStorage') {
-    this._checkStategy(strategy)
-    this.strategy = strategy
+  constructor(driver = 'externStorage') {
+    this._checkStategy(driver)
+    this.driver = driver
   }
 
-  _checkStategy(strategy) {
+  _checkStategy(driver) {
     const supportStrategies = ['externStorage', 'localStorage', 'sessionStorage']
 
-    if (!supportStrategies.includes(strategy)) {
-      throw new ReferenceError(`${strategy} storage is not support`)
+    if (!supportStrategies.includes(driver)) {
+      throw new ReferenceError(`${driver} storage is not support`)
     }
   }
 
   /**
    * @param {string} key
    * @param {any} val
-   * @param {number} maxAge 存储时间：ms
+   * @param {number} expiration 存储时间：ms
    */
-  put(key, val, maxAge = 0) {
+  put(key, val, expiration = 0) {
     const data = {
       val,
-      expires: maxAge === 0 ? 0 : Date.now() + maxAge,
+      expires: expiration === 0 ? 0 : Date.now() + expiration,
     }
-    win[this.strategy][key.toString()] = JSON.stringify(data)
+    win[this.driver][key.toString()] = JSON.stringify(data)
   }
 
   has(key) {
@@ -42,12 +42,12 @@ class CacheFacade {
    * 覆盖 value的值，但是不更新过期时间
    */
   cover(key, value) {
-    const data = win[this.strategy][key.toString()] &&
-      JSON.parse(win[this.strategy][key.toString()])
+    const data = win[this.driver][key.toString()] &&
+      JSON.parse(win[this.driver][key.toString()])
 
     if (data) {
       data.val = value
-      win[this.strategy][key.toString()] = JSON.stringify(data)
+      win[this.driver][key.toString()] = JSON.stringify(data)
     }
   }
 
@@ -56,9 +56,9 @@ class CacheFacade {
    *
    * @return bool 如果存放成功返回 true ，否则返回 false
    */
-  add(key, val, maxAge = 0) {
+  add(key, val, expiration = 0) {
     if (this.get(key) === null) {
-      this.put(key, val, maxAge)
+      this.put(key, val, expiration)
       return true
     }
 
@@ -66,8 +66,8 @@ class CacheFacade {
   }
 
   get(key, defaultValue) {
-    const data = win[this.strategy][key.toString()] &&
-      JSON.parse(win[this.strategy][key.toString()])
+    const data = win[this.driver][key.toString()] &&
+      JSON.parse(win[this.driver][key.toString()])
 
     if (data) {
       // expires 视为永久存储
@@ -111,7 +111,7 @@ class CacheFacade {
     let value = this.get(key)
 
     if (!Number.isInteger(value)) {
-      throw new ReferenceError('value is not Number')
+      throw new ReferenceError(`value ${value} is not Integer`)
     }
 
     value += amount
@@ -124,7 +124,7 @@ class CacheFacade {
     let value = this.get(key)
 
     if (!Number.isInteger(value)) {
-      throw new ReferenceError('value is not Number')
+      throw new ReferenceError(`value ${value} is not Integer`)
     }
 
     value -= amount
@@ -141,18 +141,18 @@ class CacheFacade {
   }
 
   forget(key) {
-    delete win[this.strategy][key.toString()]
+    delete win[this.driver][key.toString()]
   }
 
   /**
    * 清空所有缓存
    */
   flush() {
-    if (this.strategy === 'localStorage') {
+    if (this.driver === 'localStorage') {
       win.localStorage.clear()
     }
 
-    if (this.strategy === 'sessionStorage') {
+    if (this.driver === 'sessionStorage') {
       win.sessionStorage.clear()
     }
 
