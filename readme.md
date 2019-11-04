@@ -1,6 +1,6 @@
 # Cache
 
-Cache 库为各种前端缓存提供丰富而统一的 API。默认缓存使用的是 js 全局变量作为缓存驱动。启发于 laravel 中的 Cache 门面。
+Cache 库为各种前端缓存提供丰富而统一的 API。默认缓存使用的是 js 全局变量作为缓存驱动。参考于 laravel 中的 Cache 门面。
 
 #### 安装和使用
 
@@ -27,6 +27,14 @@ Cache.store('localStorage').get('foo');
 
 Cache.store('sessionStorage').add('ping');
 
+```
+
+#### 设置缓存前缀
+你可以在第二个参数中配置一些参数，比如缓存前缀
+```js
+Cache.store('sessionStorage', {
+    prefix: 'facade'
+});
 ```
 
 #### 在缓存中存储数据
@@ -62,6 +70,11 @@ has 方法可用于确定缓存中是否存在 key。如果值为 null，则此�
 if (Cache.store('localStorage').has('key')) {
     //
 }
+```
+
+#### 覆盖 value 的值，但是不更新过期时间
+```js
+Cache.store('localStorage').cover('key', 'value');
 ```
 
 #### 递增与递减值
