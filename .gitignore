@@ -6,3 +6,4 @@ yarn-error.log*
 lib/
 test.html
 node_modules
+dist/

@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-    "target": "es5",                          /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */
-    "module": "commonjs",                     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
-    "declaration": true,                      /* Generates corresponding '.d.ts' file. */
-    "outDir": "./lib/CacheFacade.js",                        /* Concatenate and emit output to single file. */
-
-    /* Strict Type-Checking Options */
-    "strict": true                            /* Enable all strict type-checking options. */
+    "target": "es5",
+    "sourceMap": false,
+    "declaration": true,
+    "module": "es2015",
+    "removeComments": false,
+    "moduleResolution": "node",
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "stripInternal": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "types": ["jest"],
+    "outDir": "./lib"
   },
   "include": [
     "src"

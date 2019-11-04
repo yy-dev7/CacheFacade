@@ -2,12 +2,13 @@
   "name": "web-cache-facade",
   "version": "2.0.0",
   "description": "为各种前端缓存提供丰富而统一的 API",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/CacheFacade.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
+    "clean": "shx rm -rf dist && shx rm -rf lib",
     "dev": "tsc -w",
     "test": "jest --config jestconfig.json",
-    "build": "tsc",
+    "build": "npm run clean && tsc && cpr lib dist --filter=\\.js$ && rollup -c",
     "prepublishOnly": "npm run test",
     "prepare": "npm run build"
   },
@@ -28,8 +29,11 @@
   "homepage": "https://github.com/mervynyang/CacheFacade#readme",
   "devDependencies": {
     "@types/jest": "^24.0.21",
+    "cpr": "^3.0.1",
     "jest": "^24.9.0",
     "mockdate": "^2.0.5",
+    "rollup": "^1.26.3",
+    "shx": "^0.3.2",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   }

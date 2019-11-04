@@ -96,5 +96,3 @@ test('pull value', () => {
     jest.runAllTimers()
   })
 })
-
-
